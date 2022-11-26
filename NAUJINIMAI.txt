@@ -1,0 +1,10 @@
+Paskaitos adaptuotos 2018-2019 metais KGAT kursui,
+kuris skaitomas VU MIF studentams
+ 
+Naujinimai:
+ 
+ a) pereita prie webgl2 versijos;
+ b) atlikti kai kurie html dokumentų pakeitimai
+ 
+ 
+ Irus Grinis

@@ -1,0 +1,276 @@
+<html>
+
+<head>
+<title>GL matematikos pavyzdys 1: trimačiai vektoriai</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="../js/gl-matrix-2.2.1.js"></script>
+
+
+
+<script type="text/javascript">
+    function makeMatrixId(namePrefix){
+       
+        for(var i=1;i<=4;i++)
+          for(var j=1;j<=4;j++){
+               var s = 0.0;
+               if (i==j) s = 1.0;
+               document.getElementById(namePrefix+i+j).value = s;
+          }     
+             //res[(i-1)*4+(j-1)] = parseFloat(document.getElementById(prefix+str(i)+str(j)).value);
+    
+    }
+    
+   
+  ///////////////////////////////////////////////////////////////
+
+  function parseVecN(namePrefix, num){
+     var res = [];
+     for(var i=1;i<=num;i++)
+        res[i-1] = parseFloat(document.getElementById(namePrefix+i).value);
+     return res; 
+  }
+ 
+ ///////////////////////////////////////////////////////////////
+
+  function parseVec3(namePrefix){
+     var res = vec3.create();
+     for(var i=1;i<=3;i++)
+        res[i-1] = parseFloat(document.getElementById(namePrefix+i).value);
+     return res; 
+  }
+ 
+
+ /////////////////////////////////////////////////////////////////
+
+  function parseScalar(namePrefix){
+     var res = parseFloat(document.getElementById(namePrefix).value);
+     return res; 
+  }
+
+
+  ///////////////////////////////////////////////////////////////
+    
+    function parseMatrix4x4(namePrefix){
+        var res = mat4.create();
+        for(var i=1;i<=4;i++)
+          for(var j=1;j<=4;j++)
+             res[(i-1)*4+(j-1)] = parseFloat(document.getElementById(namePrefix+i+j).value);
+        return res; 
+    }
+
+    function showMatrix(namePrefix, mat4x4){
+        matrix4x4 = mat4.clone(mat4x4);
+        mat4.transpose(matrix4x4,matrix4x4);
+        for(var i=1;i<=4;i++)
+          for(var j=1;j<=4;j++){
+               var s = 0.0;
+               if (i==j) s = 1.0;
+               document.getElementById(namePrefix+i+j).value = matrix4x4[(i-1)*4+(j-1)];
+          }     
+             //res[(i-1)*4+(j-1)] = parseFloat(document.getElementById(prefix+str(i)+str(j)).value);
+    
+    }
+
+   ///////////////////////////////////////////////////////////////
+
+   function translateA(){
+        mA = parseMatrix4x4("a_");
+        vb = parseVec3("b_");
+        mat4.translate(mA, mA, vb);
+        showMatrix("c_", mA); 
+   }
+
+   ///////////////////////////////////////////////////////////////
+
+   function rotateA_phi_b(){
+        mA = parseMatrix4x4("a_");
+        vb = parseVec3("b_");
+        phi = parseScalar("phi_") * Math.PI / 180.0
+        mat4.rotate(mA, mA, phi, vb);
+        showMatrix("c_", mA); 
+   }
+
+ ///////////////////////////////////////////////////////////////
+
+   function orthProj(){
+        mB = mat4.create();
+        vo = parseVecN("o_", 6);
+        mat4.ortho(mB, vo[0], vo[1], vo[2], vo[3],vo[4],vo[5]);
+        showMatrix("b_", mB); 
+   }
+
+</script>
+
+<style>
+input[type='text'] { font-size: 16px; }
+</style>
+
+</head>
+
+
+<body>
+    <a href="../index.html">&gt;&gt;  Turinys  </a><br />
+
+    <table style="width:100%">  
+    <td>
+    Matrica A: 
+    <table style="width:95%">  
+  
+    <tr>
+    <td> <input id="a_11" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_12" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_13" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_14" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+    <tr>
+    <td> <input id="a_21" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_22" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_23" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_24" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+  <tr>
+    <td> <input id="a_31" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_32" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_33" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_34" type="text" style="width:90%;background-color:#88FF00"> </td>
+  </tr>
+  
+   <tr>
+    <td> <input id="a_41" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_42" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_43" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_44" type="text" style="width:90%;background-color:#88FF00"> </td>
+   </tr>
+  
+    </table> 
+    </td>
+    <td>
+    Matrica B: 
+    <table style="width:95%">  
+  
+    <tr>
+    <td> <input id="b_11" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_12" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_13" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_14" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+    <tr>
+    <td> <input id="b_21" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_22" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_23" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_24" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+  <tr>
+    <td> <input id="b_31" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_32" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_33" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_34" type="text" style="width:90%;background-color:#88FF00"> </td>
+  </tr>
+  
+   <tr>
+    <td> <input id="b_41" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_42" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_43" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_44" type="text" style="width:90%;background-color:#88FF00"> </td>
+   </tr>
+  
+    </table> 
+
+    </td>
+    <td>
+    Matrica C: 
+    <table style="width:95%">  
+  
+    <tr>
+    <td> <input id="c_11" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_12" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_13" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_14" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+    <tr>
+    <td> <input id="c_21" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_22" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_23" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_24" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+  <tr>
+    <td> <input id="c_31" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_32" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_33" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_34" type="text" style="width:90%;background-color:#88FF00"> </td>
+  </tr>
+  
+   <tr>
+    <td> <input id="c_41" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_42" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_43" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_44" type="text" style="width:90%;background-color:#88FF00"> </td>
+   </tr>
+       
+    </table>
+    </td>
+   
+    </table>
+   Vektorius b:
+    <table style="width:25%">  
+    <tr> 
+    <td> <input id="b_1" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_2" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_3" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+    </table>
+    Ortogonalios transformacijos parametrai o:
+    <table style="width:50%">  
+    <tr> 
+    <td> <input id="o_1" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="o_2" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="o_3" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="o_4" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="o_5" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="o_6" type="text" style="width:90%;background-color:#88FF00"> </td>
+    
+    </tr>
+    </table>
+   
+
+    Skaicius phi:
+    <table style="width:25%">  
+    <tr> 
+    <td> <input id="phi_" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+    </table>
+
+
+ <hr>
+ 
+    <input type="button" onclick="makeMatrixId('a_')" value="A <- I">
+    &nbsp&nbsp
+    <input type="button" onclick="makeMatrixId('b_')" value="B <- I">
+    &nbsp&nbsp
+    
+    <input type="button" onclick="translateA()" value="C <- translate(A,b)">
+    &nbsp&nbsp
+    <input type="button" onclick="rotateA_phi_b()" value="C <- rotate(A,phi,b)">
+    &nbsp&nbsp
+    <input type="button" onclick="orthProj()" value="B <- glOrtho(0)">
+    &nbsp&nbsp
+    <input type="button" onclick="mult()" value="C <- B * C">
+
+
+
+
+
+
+
+    <br> 
+    <a href="../index.html">&gt;&gt; Turinys </a><br />
+</body>
+
+</html>

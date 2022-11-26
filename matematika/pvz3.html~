@@ -1,0 +1,257 @@
+<html>
+
+<head>
+<title>GL matematikos pavyzdys 1: trimačiai vektoriai</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="../js/gl-matrix-2.2.1.js"></script>
+
+
+
+<script type="text/javascript">
+    function parseNumbers(){
+        var a1 = document.getElementById("a_1").value;
+        var a2 = document.getElementById("a_2").value;
+        var a3 = document.getElementById("a_3").value;
+        
+        //console.log(a1); 
+        var b1 = document.getElementById("b_1").value;
+        var b2 = document.getElementById("b_2").value;
+        var b3 = document.getElementById("b_3").value;
+        
+        var alpha = document.getElementById("alpha").value;
+        
+        return [parseFloat(a1), parseFloat(a2), parseFloat(a3), parseFloat(b1), parseFloat(b2), parseFloat(b3), parseFloat(alpha)];
+    
+    }
+    
+    function makeMatrixId(namePrefix){
+       
+        for(var i=1;i<=4;i++)
+          for(var j=1;j<=4;j++){
+               var s = 0.0;
+               if (i==j) s = 1.0;
+               document.getElementById(namePrefix+i+j).value = s;
+          }     
+             //res[(i-1)*4+(j-1)] = parseFloat(document.getElementById(prefix+str(i)+str(j)).value);
+    
+    }
+    
+    ///////////////////////////////////////////////////////////////
+    
+    function parseMatrix4x4(namePrefix){
+        var res = mat4.create();
+        for(var i=1;i<4;i++)
+          for(var j=1;j<4;j++)
+             res[(i-1)*4+(j-1)] = parseFloat(document.getElementById(namePrefix+str(i)+str(j)).value);
+        return res; 
+    }
+
+    function addFromForm(){
+        var nums = parseNumbers();
+        var v1 = vec3.fromValues(nums[0], nums[1], nums[2]);
+        var v2 = vec3.fromValues(nums[3], nums[4], nums[5]);
+        
+        //console.log(v1); 
+        var v3 = vec3.create();
+        var v3 = vec3.add(v3, v1, v2);
+        document.getElementById("c_1").value = v3[0];
+        document.getElementById("c_2").value = v3[1];
+        document.getElementById("c_3").value = v3[2];
+        
+      //  console.log(v3); 
+    } 
+
+
+    function crossProduct(){
+        var nums = parseNumbers();
+        var v1 = vec3.fromValues(nums[0], nums[1], nums[2]);
+        var v2 = vec3.fromValues(nums[3], nums[4], nums[5]);
+        
+        //console.log(v1); 
+        var v3 = vec3.create();
+        var v3 = vec3.cross(v3, v1, v2);
+        document.getElementById("c_1").value = v3[0];
+        document.getElementById("c_2").value = v3[1];
+        document.getElementById("c_3").value = v3[2];
+        
+      //  console.log(v3); 
+    } 
+
+
+   function multiplyByScalar(){
+        var nums = parseNumbers();
+        var v1 = vec3.fromValues(nums[0], nums[1], nums[2]);
+        var alpha = nums[6];
+        console.log(alpha); 
+        var v3 = vec3.create();
+        var v3 = vec3.scale(v3, v1, alpha);
+        document.getElementById("c_1").value = v3[0];
+        document.getElementById("c_2").value = v3[1];
+        document.getElementById("c_3").value = v3[2];
+        
+        //console.log(v3); 
+    } 
+
+  function normalizeA(){
+        var nums = parseNumbers();
+        var v1 = vec3.fromValues(nums[0], nums[1], nums[2]);
+        var v3 = vec3.create();
+        v3 = vec3.normalize(v3, v1);
+        console.log(v3); 
+        document.getElementById("c_1").value = v3[0];
+        document.getElementById("c_2").value = v3[1];
+        document.getElementById("c_3").value = v3[2];
+        
+    } 
+
+
+    function distance(){
+        var nums = parseNumbers();
+        var v1 = vec3.fromValues(nums[0], nums[1], nums[2]);
+        var v2 = vec3.fromValues(nums[3], nums[4], nums[5]);
+        //console.log(v1); 
+        document.getElementById("distance").value = vec3.distance(v1,v2);
+
+    } 
+
+
+</script>
+
+<style>
+input[type='text'] { font-size: 20px; }
+</style>
+
+</head>
+
+
+<body>
+    <a href="../index.html">&gt;&gt;  Turinys  </a><br />
+
+    <table style="width:75%">  
+    <td>
+    Matrica A: 
+    <table style="width:95%">  
+  
+    <tr>
+    <td> <input id="a_11" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_12" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_13" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_14" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+    <tr>
+    <td> <input id="a_21" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_22" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_23" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_24" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+  <tr>
+    <td> <input id="a_31" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_32" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_33" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_34" type="text" style="width:90%;background-color:#88FF00"> </td>
+  </tr>
+  
+   <tr>
+    <td> <input id="a_41" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_42" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_43" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_44" type="text" style="width:90%;background-color:#88FF00"> </td>
+   </tr>
+  
+    </table> 
+    </td>
+    <td>
+    Matrica B: 
+    <table style="width:95%">  
+  
+    <tr>
+    <td> <input id="b_11" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_12" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_13" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_14" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+    <tr>
+    <td> <input id="b_21" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_22" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_23" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_24" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+  <tr>
+    <td> <input id="b_31" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_32" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_33" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_34" type="text" style="width:90%;background-color:#88FF00"> </td>
+  </tr>
+  
+   <tr>
+    <td> <input id="b_41" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_42" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_43" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="b_44" type="text" style="width:90%;background-color:#88FF00"> </td>
+   </tr>
+  
+    </table> 
+
+    </td>
+    <td>
+    Matrica C: 
+    <table style="width:95%">  
+  
+    <tr>
+    <td> <input id="c_11" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_12" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_13" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_14" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+    <tr>
+    <td> <input id="c_21" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_22" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_23" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_24" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </tr>
+  
+  <tr>
+    <td> <input id="c_31" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_32" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_33" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_34" type="text" style="width:90%;background-color:#88FF00"> </td>
+  </tr>
+  
+   <tr>
+    <td> <input id="c_41" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_42" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_43" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="c_44" type="text" style="width:90%;background-color:#88FF00"> </td>
+   </tr>
+  
+    </table>
+    </table>
+    <hr>
+ 
+    <input type="button" onclick="makeMatrixId('a_')" value="A <- I">
+    &nbsp&nbsp
+    <input type="button" onclick="normalizeA()" value="c <- normalize(a)">
+    &nbsp&nbsp
+    <input type="button" onclick="multiplyByScalar()" value="c <- alpha * a">
+    &nbsp&nbsp
+    <input type="button" onclick="crossProduct()" value="c <- a x b">
+    &nbsp&nbsp
+    <input type="button" onclick="distance()" value="Atstumas <- atstumas(a, b)">
+
+
+
+
+
+
+
+    <br> 
+    <a href="../index.html">&gt;&gt; Turinys </a><br />
+</body>
+
+</html>

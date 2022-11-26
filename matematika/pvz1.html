@@ -1,0 +1,131 @@
+<html>
+
+<head>
+<title>GL matematikos pavyzdys 1: dvimačiai vektoriai</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="../js/gl-matrix-2.2.1.js"></script>
+
+
+
+<script type="text/javascript">
+    function parseNumbers(){
+        var a1 = document.getElementById("a_1").value;
+        var a2 = document.getElementById("a_2").value;
+        //console.log(a1); 
+        var b1 = document.getElementById("b_1").value;
+        var b2 = document.getElementById("b_2").value;
+        var alpha = document.getElementById("alpha").value;
+        
+        return [parseFloat(a1), parseFloat(a2), parseFloat(b1), parseFloat(b2), parseFloat(alpha)];
+    
+    }
+
+    function addFromForm(){
+        var nums = parseNumbers();
+        var v1 = vec2.fromValues(nums[0], nums[1]);
+        var v2 = vec2.fromValues(nums[2], nums[3]);
+        //console.log(v1); 
+        var v3 = vec2.create();
+        var v3 = vec2.add(v3, v1, v2);
+        document.getElementById("c_1").value = v3[0];
+        document.getElementById("c_2").value = v3[1];
+      //  console.log(v3); 
+    } 
+
+   function multiplyByScalar(){
+        var nums = parseNumbers();
+        var v1 = vec2.fromValues(nums[0], nums[1]);
+        var alpha = nums[4];
+        console.log(alpha); 
+        var v3 = vec2.create();
+        var v3 = vec2.scale(v3, v1, alpha);
+        document.getElementById("c_1").value = v3[0];
+        document.getElementById("c_2").value = v3[1];
+        //console.log(v3); 
+    } 
+
+  function normalizeA(){
+        var nums = parseNumbers();
+        var v1 = vec2.fromValues(nums[0], nums[1]);
+        var v3 = vec2.create();
+        v3 = vec2.normalize(v3, v1);
+        console.log(v3); 
+        document.getElementById("c_1").value = v3[0];
+        document.getElementById("c_2").value = v3[1];
+    } 
+
+
+    function distance(){
+        var nums = parseNumbers();
+        var v1 = vec2.fromValues(nums[0], nums[1]);
+        var v2 = vec2.fromValues(nums[2], nums[3]);
+        //console.log(v1); 
+        document.getElementById("distance").value = vec2.distance(v1,v2);
+
+    } 
+
+
+</script>
+
+</head>
+
+
+<body>
+    <a href="../index.html">&gt;&gt;  Turinys  </a><br />
+
+    Vektorius a: 
+    <table style="width:15%">  
+    <td> <input id="a_1" type="text" style="width:90%;background-color:#88FF00"> </td>
+    <td> <input id="a_2" type="text" style="width:90%;background-color:#88FF00"> </td>
+    </table> 
+    <br>
+    
+    Vektorius b: 
+    <table style="width:15%">  
+    <td> <input id="b_1" type="text" style="width:90%;background-color:#FFFF00"> </td>
+    <td> <input id="b_2" type="text" style="width:90%;background-color:#FFFF00"> </td>
+    </table> 
+    <br>
+    <p>
+    Skaliaras alpha: 
+    <table  style="width:15%">   
+    <td> <input id="alpha" type="text"  style="width:90%;background-color:#22FF00"> </td>
+    </table> 
+    <br>
+
+    <hr>
+    <br>
+    Vektorius c: 
+    <table>  
+    <td> <input id="c_1" type="text"> </td>
+    <td> <input id="c_2" type="text"> </td>
+    </table> 
+    <br>
+   
+    Atstumas: 
+    <table>  
+    <td> <input id="distance" type="text"> </td>
+    </table> 
+    <br>
+
+ 
+    <input type="button" onclick="addFromForm()" value="c <- a + b">
+    &nbsp&nbsp
+    <input type="button" onclick="normalizeA()" value="c <- normalize(a)">
+    &nbsp&nbsp
+    <input type="button" onclick="multiplyByScalar()" value="c <- alpha * a">
+    &nbsp&nbsp
+    <input type="button" onclick="distance()" value="Atstumas <- atstumas(a, b)">
+
+
+
+
+
+
+
+    <br> 
+    <a href="../index.html">&gt;&gt; Turinys </a><br />
+</body>
+
+</html>
